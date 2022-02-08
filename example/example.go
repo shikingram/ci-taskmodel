@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ci-taskmodel/model"
 	"fmt"
+	"github.com/shikingram/ci-taskmodel/model"
 )
 
 type Deployment struct {
