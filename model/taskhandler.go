@@ -31,8 +31,9 @@ type taskBaseModelImpl struct {
 
 var _ ITaskBaseModel = &taskBaseModelImpl{}
 
-func NewTaskBaseModel() ITaskBaseModel {
+func NewTaskBaseModel(metadata map[string]interface{}) ITaskBaseModel {
 	return &taskBaseModelImpl{
+		metadata:       metadata,
 		cilDeployChain: &types.CilDeployChain{},
 	}
 }

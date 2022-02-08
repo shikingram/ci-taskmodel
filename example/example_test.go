@@ -22,10 +22,9 @@ func TestNewDeployment(t *testing.T) {
 }
 
 func TestNewTaskDeployment(t *testing.T) {
-	m := model.NewTaskBaseModel()
-	h := NewTaskDeployment(m)
-	h.SetMetadata(map[string]interface{}{
+	m := model.NewTaskBaseModel(map[string]interface{}{
 		"action": "create",
 	})
+	h := NewTaskDeployment(m)
 	h.Handle()
 }
