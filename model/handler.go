@@ -2,18 +2,8 @@ package model
 
 import "github.com/shikingram/ci-taskmodel/types"
 
-type ITaskHandler interface {
-	Handle()
-	GetSelf() map[string]interface{}
-	GetState() string
-	SetCilDeployChain(traceId, action, parentUniqId, uniqId string)
-	GetDeployType() string
-	GetUniqueId() string
-	GetAction() string
-}
-
 /*
-IBaseHandler 独立函数实现
+IBaseHandler is a base interface of handler，all handler should implement those functions
 */
 type IBaseHandler interface {
 	Handle(action string) error
@@ -21,7 +11,7 @@ type IBaseHandler interface {
 }
 
 /*
-IBaseModel 公用的model
+IBaseModel is a base interface of model, all handler should contain those fields
 */
 type IBaseModel interface {
 	SetCilDeployChain(traceId, action, parentUniqId, uniqId string)
@@ -32,34 +22,36 @@ type IBaseModel interface {
 	RetryNum() int64
 }
 
-type handlerImpl struct {
+type baseModelImpl struct {
 	retryNum       int64
 	action         string
 	cilDeployChain *types.CilDeployChain
-	//todo 不导出
+	//todo not export
 	Details types.Details
 }
 
-func (d *handlerImpl) RetryNum() int64 {
+var _ IBaseModel = &baseModelImpl{}
+
+func (d *baseModelImpl) RetryNum() int64 {
 	return d.retryNum
 }
 
-func (d *handlerImpl) Action() string {
+func (d *baseModelImpl) Action() string {
 	return d.action
 }
 
-func (d *handlerImpl) CilDeployChain() *types.CilDeployChain {
+func (d *baseModelImpl) CilDeployChain() *types.CilDeployChain {
 	return d.cilDeployChain
 }
 
-func NewIHandler() IBaseModel {
-	return &handlerImpl{
+func NewBaseModel() IBaseModel {
+	return &baseModelImpl{
 		cilDeployChain: &types.CilDeployChain{},
 		Details:        types.Details{},
 	}
 }
 
-func (d *handlerImpl) SetCilDeployChain(traceId, action, parentUniqId, uniqId string) {
+func (d *baseModelImpl) SetCilDeployChain(traceId, action, parentUniqId, uniqId string) {
 	d.cilDeployChain = &types.CilDeployChain{
 		TraceId:      traceId,
 		Action:       action,
@@ -68,10 +60,10 @@ func (d *handlerImpl) SetCilDeployChain(traceId, action, parentUniqId, uniqId st
 	}
 }
 
-func (d *handlerImpl) SetAction(action string) {
+func (d *baseModelImpl) SetAction(action string) {
 	d.action = action
 }
 
-func (d *handlerImpl) SetRetryNum(retryNum int64) {
+func (d *baseModelImpl) SetRetryNum(retryNum int64) {
 	d.retryNum = retryNum
 }

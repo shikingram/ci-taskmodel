@@ -1,4 +1,4 @@
-package main
+package example
 
 import (
 	"fmt"
@@ -10,36 +10,23 @@ type Deployment struct {
 	name string
 }
 
-func NewDeployment(handler model.IBaseModel) *Deployment {
+func NewDeployment(m model.IBaseModel) *Deployment {
 	return &Deployment{
-		IBaseModel: handler,
+		IBaseModel: m,
 	}
 }
 
 func (d *Deployment) Handle(action string) error {
+	// do something
 	fmt.Println(action)
 	return nil
 }
 
 func (d *Deployment) Callback(requestId, fromId, fromType, targetType string) error {
-	return nil
-}
-
-func (d *Deployment) SetModelPending() error {
+	// do something
 	return nil
 }
 
 func (d *Deployment) DirRun() bool {
 	return false
-}
-
-func main() {
-	handler := model.NewIHandler()
-	h := NewDeployment(handler)
-	err := h.Handle("create")
-	if err != nil {
-		panic(err)
-	}
-	h.SetAction("update")
-	fmt.Println(h.Action())
 }
