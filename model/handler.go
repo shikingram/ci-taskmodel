@@ -1,6 +1,6 @@
 package model
 
-import "ci-taskmodel/types"
+import "github.com/shikingram/ci-taskmodel/types"
 
 type ITaskHandler interface {
 	Handle()
